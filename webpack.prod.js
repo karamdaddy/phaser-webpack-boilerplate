@@ -21,7 +21,5 @@ module.exports = merge(common, {
       })
     ]
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-  ]
-})
+  plugins: [new CleanWebpackPlugin()]
+});

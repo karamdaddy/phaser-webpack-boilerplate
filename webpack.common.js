@@ -6,12 +6,12 @@ const webpack = require('webpack');
 module.exports = {
   mode: 'development',
   entry: {
-    app: './src/index.js'
+    app: './src/index.ts'
   },
-  devtool: "eval-source-map",
+  devtool: 'eval-source-map',
   output: {
-    filename: '[name].js',
-    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'build')
   },
   optimization: {
     splitChunks: {
@@ -27,23 +27,26 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
+        test: /\.tsx?$/,
         use: {
-          loader: 'babel-loader',
-        }
+          loader: 'ts-loader'
+        },
+        exclude: /node_modules/
       }
     ]
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'build'),
     compress: true,
-    port: 8080,
+    port: 8080
   },
   plugins: [
     new webpack.DefinePlugin({
-      'CANVAS_RENDERER': JSON.stringify(true),
-      'WEBGL_RENDERER': JSON.stringify(true)
+      CANVAS_RENDERER: JSON.stringify(true),
+      WEBGL_RENDERER: JSON.stringify(true)
     }),
     new HtmlWebpackPlugin({
       template: './index.html'
@@ -54,7 +57,7 @@ module.exports = {
           from: path.resolve(__dirname, 'assets'),
           to: path.resolve(__dirname, 'build/assets')
         }
-      ],
+      ]
     })
-  ],
+  ]
 };
